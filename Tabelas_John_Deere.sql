@@ -8,7 +8,7 @@ Create table Centro_Distribuicao (
 	endereco varchar (80),
 	telefone char (11),
 	email varchar (40),
-	
+	PRIMARY KEY (cod_centro)
 )
 
 create table Pecas (
@@ -17,7 +17,7 @@ create table Pecas (
 	medidas varchar (40),
 	peso varchar (10),
 	preco int,
-	
+	PRIMARY KEY (cod_peca)
 )
 
 Create table Clientes (
@@ -44,7 +44,9 @@ Create table Estoque (
 	cod_peca int,
 	cod_centro int,
 	quantidade int,
-	
+	FOREIGN KEY (cod_peca) REFERENCES Pecas (cod_peca),
+	FOREIGN KEY (cod_centro) REFERENCES Centro_Distribuicao (cod_centro),
+	PRIMARY KEY (cod_peca, cod_centro)
 )
 
 Create table Pedido (
@@ -54,7 +56,9 @@ Create table Pedido (
 	frete int,
 	data_frete date,
 	custo int,
-	
+	FOREIGN KEY (cnpj_cli) REFERENCES Clientes (cnpj),
+	FOREIGN KEY (cod_peca) REFERENCES Pecas (cod_peca),
+	PRIMARY KEY (cnpj_cli, cod_peca)
 )
 
 Create table Fornecimento (
@@ -64,5 +68,7 @@ Create table Fornecimento (
 	frete int,
 	data_frete date,
 	custo int,
-	
+	FOREIGN KEY (cnpj_for) REFERENCES Fornecedor (cnpj),
+	FOREIGN KEY (cod_peca) REFERENCES Pecas (cod_peca),
+	PRIMARY KEY (cnpj_for, cod_peca)
 )
